@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Cards</title>
+    <style>
+        div.card {
+            display: inline-block; padding: 10px; margin: 10px;
+            width: 50px; height: 80px; background: #EEE;
+            border: 3px solid #DDD; border-radius: 5px;
+            font-size: 18pt; text-align: center; line-height: 75px;
+        }
+    </style>
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+</head>
+<body>
+<div id="main"></div>
+<script>
+    function cardDeckBuilder(selector) {
+
+        return{
+            addCard: function (face, suit) {
+                let htmlSuit;
+                switch(suit){
+                    case 'D': htmlSuit = '\u2666'; break;
+                    case 'H': htmlSuit = '\u2665';break;
+                    case 'C': htmlSuit = '\u2663'; break;
+                    case 'S': htmlSuit = '\u2660'; break;
+                    default: break;
+                }
+                $(selector).append($('<div>').attr('class','card').text(`${face} ${htmlSuit}`).on('click', function () {
+                    for (let obj of $(`${selector} div`)) {
+                        $(selector).prepend($(obj));
+                    }
+                }));
+            }
+        }
+    }
+</script>
+<script>
+    $(function() {
+        let builder = cardDeckBuilder("#main");
+        builder.addCard("10", "D");
+        builder.addCard("K", "S");
+        builder.addCard("Q", "H");
+        builder.addCard("4", "C");
+
+    });
+</script>
+</body>
+</html>

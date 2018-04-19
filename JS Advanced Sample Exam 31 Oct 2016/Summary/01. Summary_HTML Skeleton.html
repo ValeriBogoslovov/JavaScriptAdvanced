@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Summary</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+</head>
+<body>
+
+<div id="holder">
+    <div id="content">
+        <p>Don't match this <strong>Match that </strong><strong>another match</strong></p>
+    </div>
+    <strong>Not actually a match</strong>
+</div>
+<input type="button" id="makeit" value="Generate Summary"/>
+
+<script>
+    function summary(selector) {
+        $(selector).on('click',function () {
+            let contentText = $('#content strong').text();
+            let summaryDiv = $('<div>');
+            let parentDiv = $('#content').parent();
+            let summaryHeader = $('<h2>').text('Summary');
+            let summaryParagraph = $('<p>').text(contentText);
+
+            summaryDiv.attr('id', 'summary');
+            summaryDiv.append(summaryHeader);
+            summaryDiv.append(summaryParagraph);
+
+            parentDiv.append(summaryDiv);
+        });
+    };
+    result = summary('#makeit');
+</script>
+</body>
+</html>

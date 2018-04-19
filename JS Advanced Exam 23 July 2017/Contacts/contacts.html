@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Contacts Builder</title>
+    <style>
+        article {
+            background: #EEE;
+            padding: 1px;
+            width: 250px;
+            margin: 1px;
+        }
+
+        .title {
+            background: #DDD;
+            padding: 5px;
+            font-weight: bold;
+        }
+
+        .title button {
+            float: right
+        }
+
+        .info {
+            margin: 5px;
+        }
+
+        .info span {
+            display: block;
+        }
+
+        .online {
+            background: #9E9;
+        }
+    </style>
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+</head>
+<body>
+<div id="content"></div>
+<script>
+    class Contact{
+        constructor(firstName, lastName, phone, email, online = false){
+            this.firstName = firstName;
+            this.lastName = lastName;
+            this.phone = phone;
+            this.email = email;
+            this.online = online;
+            this.article = $('<article>').append($('<div>').addClass('title').text(`${this.firstName} ${this.lastName}`).append($('<button>').html('&#8505;').on('click', function (event) {
+                let info = $(event.target).parent().parent().children()[1];
+                if($(info).css('display') == 'none'){
+                    $(info).css('display', 'block');
+                }else{
+                    $(info).css('display', 'none');
+                }
+            }))).append($('<div>').addClass('info').css('display', 'none').append($('<span>').html(`&phone; ${this.phone}`)).append($('<span>').html(`&#9993; ${this.email}`)));
+        }
+        get online(){
+            return this._online;
+        }
+
+        set online(value){
+            if(value == true){
+                this._online = value;
+                $(this.article).find('.title').addClass('online');
+
+            }else{
+                this._online = value;
+                $(this.article).find('.title').removeClass('online');
+            }
+
+        }
+
+        render(selector){
+            let parent = $(`#${selector}`);
+            parent.append($(this.article));
+        }
+    }
+    let contact = new Contact('Pesho', 'Ludiq', '+35612435', 'alabala@abv.bg');
+    let newContact = new Contact('Valio', 'Kita', '41515315136', 'yess.@hotmail.com');
+    newContact.online = true;
+    newContact.render('content');
+    contact.render('content');
+    newContact.online = false;
+    newContact.online = true;
+    contact.online = true;
+
+</script>
+</body>
+</html>
